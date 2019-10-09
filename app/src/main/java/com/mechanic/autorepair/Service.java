@@ -1,5 +1,7 @@
 package com.mechanic.autorepair;
 
+import java.util.ArrayList;
+
 public class Service {
 
 
@@ -14,6 +16,7 @@ public class Service {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
+
     }
 
     boolean isSelected;

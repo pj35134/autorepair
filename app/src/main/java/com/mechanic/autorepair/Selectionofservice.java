@@ -6,9 +6,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
@@ -36,6 +40,7 @@ public class Selectionofservice extends AppCompatActivity {
     GridLayoutManager lLayout;
     CardView cardView;
     CheckBox checkBox;
+    String data ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +139,60 @@ public class Selectionofservice extends AppCompatActivity {
 
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_add:
+
+                getOrder();
+
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void getOrder(){
+
+        ArrayList<String> datas = new ArrayList<>();
+        double price;
+        int sum=0;
+
+        for (int j=0; j<serviceList.size();j++){
+
+            if (serviceList.get(j).isSelected() == true){
+
+
+                data = "\n" + serviceList.get(j).getTitle().toString() + "   " + serviceList.get(j).getPrice();
+                price = serviceList.get(j).getPrice();
+                sum = (int) (sum + price);
+                datas.add(data);
+                   /* Log.i("datas",datas.get(i));
+                    i++;*/
+
+            }
+
+
+        }
+
+
+
+
+        Intent intent=new Intent(Selectionofservice.this, Order_activity.class);
+        intent.putStringArrayListExtra("datas", (ArrayList<String>) datas);
+        intent.putExtra("sum",sum);
+        startActivity(intent);
+
+
+    }
 
 }
